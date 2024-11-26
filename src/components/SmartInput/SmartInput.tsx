@@ -91,7 +91,6 @@ export const SmartInput: React.FC<ISmartInputProps> = ({
         onChange={handleChange}
         onBlur={handleBlur}
         onKeyDown={blockAlpha}
-        // onFocus={() => setIsInteracting(true)}
         disabled={status === 'pending'}
         className={combinedClassName}
         {...inputProps}
