@@ -37,9 +37,6 @@ export const CreditCardForm = () => {
     }
   }, [verificationError, verificationData]);
 
-  // if (pendingVerification)
-  //   console.log('original pending verification', pendingVerification);
-
   const submitUnavailable =
     pendingVerification ||
     verificationError !== undefined ||
@@ -64,10 +61,10 @@ export const CreditCardForm = () => {
             verificationError: Boolean(verificationError),
             verificationData,
           })}
-          onChangeValidator={function (value: string): void {
+          onChange={(value: string) => {
             setCardNumber(value);
           }}
-          lazyValidator={async function (value: string) {
+          lazyValidator={async (value: string) => {
             verifyCreditCard({
               candidate: value,
             });
