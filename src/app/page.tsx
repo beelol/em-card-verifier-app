@@ -2,6 +2,7 @@
 
 import { FaCreditCard } from 'react-icons/fa';
 import { CreditCardForm } from 'src/components/CreditCardForm/CreditCardForm';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   return (

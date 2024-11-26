@@ -4,9 +4,21 @@ import { useVerificationContext } from 'src/context/VerificationContext/Verifica
 import { useCheckout } from 'src/apiBridge/checkout';
 import { getVerificationMessage } from 'src/app/utils/getVerificationMessage';
 import { BiCart } from 'react-icons/bi';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 export const CreditCardForm = () => {
   const { checkout, checkoutPending } = useCheckout();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      await checkout(e);
+      toast.success('Payment successful!');
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
 
   const {
     trigger: verifyCreditCard,
@@ -14,6 +26,12 @@ export const CreditCardForm = () => {
     error: verificationError,
     data: verificationData,
   } = useVerificationContext();
+
+  useEffect(() => {
+    if (verificationError || verificationData?.cardIsValid === false) {
+      toast.error('Invalid credit card. Please try again.');
+    }
+  }, [verificationError, verificationData]);
 
   if (pendingVerification)
     console.log('original pending verification', pendingVerification);
@@ -25,7 +43,7 @@ export const CreditCardForm = () => {
     checkoutPending;
 
   return (
-    <form onSubmit={checkout}>
+    <form onSubmit={onSubmit}>
       <div className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
         <SmartInput
           label="Credit Card"

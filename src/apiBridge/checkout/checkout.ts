@@ -24,9 +24,9 @@ export const useCheckout = () => {
     }
 
     if (!validCard) {
-      console.log('failed');
       setSubmitPending(false);
-      return;
+
+      throw new Error('Invalid credit card. Please try again.');
     }
 
     await new Promise(resolve => setTimeout(resolve, 2000));

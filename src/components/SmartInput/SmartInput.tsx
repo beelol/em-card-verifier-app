@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ISmartInputProps } from './types';
 import { blockAlpha, notCreditCard } from 'src/utils/blockAlpha';
-// import { useVerifyCreditCard } from 'src/apiBridge/verifyCreditCard';
-import { useVerificationContext } from 'src/context/VerificationContext/VerificationContext';
 
 export const SmartInput: React.FC<ISmartInputProps> = ({
   onChangeValidator,
