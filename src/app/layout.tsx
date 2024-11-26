@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ToastContainer />
+        <ToastContainer position="top-center" />
 
         <VerificationProvider>{children}</VerificationProvider>
       </body>
