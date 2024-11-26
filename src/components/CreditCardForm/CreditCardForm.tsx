@@ -15,8 +15,12 @@ export const CreditCardForm = () => {
     try {
       await checkout(e);
       toast.success('Payment successful!');
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      let message = 'Unknown Error';
+
+      if (error instanceof Error) message = error.message;
+
+      toast.error(message);
     }
   };
 
