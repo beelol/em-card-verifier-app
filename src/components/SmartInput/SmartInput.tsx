@@ -3,7 +3,7 @@ import { ISmartInputProps } from './types';
 import { blockAlpha, notCreditCard } from 'src/utils/blockAlpha';
 
 export const SmartInput: React.FC<ISmartInputProps> = ({
-  onChange: onChangeValidator,
+  onChange,
   lazyValidator,
   status,
   className,
@@ -52,7 +52,11 @@ export const SmartInput: React.FC<ISmartInputProps> = ({
     }
 
     setValue(newValue);
-    onChangeValidator(newValue);
+
+    if (onChange) {
+      onChange(e);
+    }
+
     setIsInteracting(true);
   };
 

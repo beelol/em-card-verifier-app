@@ -62,13 +62,13 @@ export const CreditCardForm = () => {
             verificationError: Boolean(verificationError),
             verificationData,
           })}
-          onChange={(value: string) => {
+          onChange={e => {
             // Reset data so you can checkout again
             if (!pendingVerification) {
               resetVerificationData();
             }
 
-            setCardNumber(value);
+            setCardNumber(e.target.value);
           }}
           lazyValidator={async (value: string) => {
             verifyCreditCard({
@@ -93,7 +93,7 @@ export const CreditCardForm = () => {
             className={`btn flex-1 ${
               submitUnavailable ? 'btn-disabled' : 'btn-success text-white'
             }`}>
-            {checkoutPending ? (
+            {checkoutPending || pendingVerification ? (
               <span className="loading loading-spinner loading-md"></span>
             ) : (
               <BiCart size={20} />
