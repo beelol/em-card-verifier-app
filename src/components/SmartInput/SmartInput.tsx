@@ -8,6 +8,7 @@ export const SmartInput: React.FC<ISmartInputProps> = ({
   status,
   className,
   label,
+  icon,
   ...inputProps
 }) => {
   const [value, setValue] = useState('');
@@ -78,11 +79,12 @@ export const SmartInput: React.FC<ISmartInputProps> = ({
     }
   };
 
-  const combinedClassName = `${className || ''}`.trim();
+  const combinedClassName = `${className || ''} font-normal`.trim();
 
   return (
     <label
-      className={`${getStatusClassName()} input input-bordered flex items-center gap-2`}>
+      className={`${getStatusClassName()} input input-bordered flex items-center gap-2 font-semibold`}>
+      {icon}
       {label}
       <input
         value={value}
