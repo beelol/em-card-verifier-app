@@ -29,6 +29,7 @@ export const CreditCardForm = () => {
     isMutating: pendingVerification,
     error: verificationError,
     data: verificationData,
+    reset: resetVerificationData,
   } = useVerificationContext();
 
   useEffect(() => {
@@ -62,6 +63,11 @@ export const CreditCardForm = () => {
             verificationData,
           })}
           onChange={(value: string) => {
+            // Reset data so you can checkout again
+            if (!pendingVerification) {
+              resetVerificationData();
+            }
+
             setCardNumber(value);
           }}
           lazyValidator={async (value: string) => {
