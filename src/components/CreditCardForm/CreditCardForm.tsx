@@ -53,7 +53,7 @@ export const CreditCardForm = () => {
           name="creditCard"
           type="text"
           className="grow"
-          placeholder="Daisy"
+          placeholder="Enter card number"
           icon={<DynamicCardIcon cardNumber={cardNumber} size={26} />}
           disabled={checkoutPending}
           required
