@@ -17,5 +17,9 @@ export const getVerificationMessage = ({
     return 'Invalid credit card';
   }
 
+  if (verificationData && verificationData.cardIsValid) {
+    return 'Credit card verified!';
+  }
+
   return '';
 };
