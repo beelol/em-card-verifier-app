@@ -56,6 +56,7 @@ export const CreditCardForm = () => {
           className="grow"
           placeholder="Daisy"
           icon={<DynamicCardIcon cardNumber={cardNumber} size={26} />}
+          disabled={checkoutPending}
           required
           status={getStatus({
             pendingVerification,
