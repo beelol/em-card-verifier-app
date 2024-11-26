@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ISmartInputProps } from './types';
 import { blockAlpha, notCreditCard } from 'src/utils/blockAlpha';
+// import { useVerifyCreditCard } from 'src/apiBridge/verifyCreditCard';
+import { useVerificationContext } from 'src/context/VerificationContext/VerificationContext';
 
 export const SmartInput: React.FC<ISmartInputProps> = ({
   onChangeValidator,
@@ -16,6 +18,14 @@ export const SmartInput: React.FC<ISmartInputProps> = ({
   const lazyValidatorRef = useRef<Promise<void> | null>(null);
 
   useEffect(() => {
+    if (value === '') {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+
+      return;
+    }
+
     if (isInteracting) {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
@@ -37,7 +47,7 @@ export const SmartInput: React.FC<ISmartInputProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
-    if (notCreditCard(newValue)) {
+    if (newValue.length > 0 && notCreditCard(newValue)) {
       e.preventDefault();
       return;
     }

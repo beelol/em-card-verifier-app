@@ -1,46 +1,9 @@
 'use client';
 
 import { FaCreditCard } from 'react-icons/fa';
-import { useVerifyCreditCard } from 'src/apiBridge/verifyCreditCard/verifyCreditCard';
-import { SmartInput } from 'src/components/SmartInput';
-import { Status } from 'src/components/SmartInput/types';
+import { CreditCardForm } from 'src/components/CreditCardForm/CreditCardForm';
 
 export default function Home() {
-  const {
-    trigger: verifyCreditCard,
-    isMutating: pendingVerification,
-    error: verificationError,
-    data: verificationData,
-  } = useVerifyCreditCard();
-
-  const getStatus = (): Status | undefined => {
-    if (pendingVerification) {
-      return 'pending';
-    }
-
-    if (verificationError) {
-      return 'error';
-    }
-
-    if (verificationData?.cardIsValid) {
-      return 'success';
-    }
-
-    if (verificationData?.cardIsValid === false) {
-      return 'error';
-    }
-  };
-
-  const getVerificationMessage = () => {
-    if (verificationError) {
-      return verificationError.message;
-    }
-    if (verificationData && !verificationData.cardIsValid) {
-      return 'Invalid credit card';
-    }
-    return '';
-  };
-
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -62,41 +25,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <form
-          onSubmit={async e => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-            const creditCard = formData.get('creditCard');
-
-            verifyCreditCard({
-              candidate: creditCard as string,
-            });
-          }}>
-          <div className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-            <SmartInput
-              label="Credit Card"
-              name="creditCard"
-              type="text"
-              className="grow"
-              placeholder="Daisy"
-              required
-              status={getStatus()}
-              onChangeValidator={function (value: string): void {
-                console.log(value);
-              }}
-              lazyValidator={async function (value: string) {
-                verifyCreditCard({
-                  candidate: value,
-                });
-              }}
-            />
-
-            <div className="label">
-              <span className="label-text-alt">{getVerificationMessage()}</span>
-            </div>
-          </div>
-        </form>
+        <CreditCardForm />
       </main>
     </div>
   );

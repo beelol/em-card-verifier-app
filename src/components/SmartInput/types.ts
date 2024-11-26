@@ -1,4 +1,4 @@
-export type Status = 'success' | 'error' | 'pending';
+import { Status } from 'src/types/verificationStatus';
 
 export interface ISmartInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
