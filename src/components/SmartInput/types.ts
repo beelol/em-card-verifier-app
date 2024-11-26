@@ -6,4 +6,5 @@ export interface ISmartInputProps
   lazyValidator: (value: string) => Promise<void>;
   status?: Status;
   label: string;
+  icon?: React.ReactNode;
 }

@@ -5,7 +5,8 @@ import { useCheckout } from 'src/apiBridge/checkout';
 import { getVerificationMessage } from 'src/app/utils/getVerificationMessage';
 import { BiCart } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { DynamicCardIcon } from '../DynamicCardIcon';
 
 export const CreditCardForm = () => {
   const { checkout, checkoutPending } = useCheckout();
@@ -15,7 +16,6 @@ export const CreditCardForm = () => {
       await checkout(e);
       toast.success('Payment successful!');
     } catch (error: any) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -33,8 +33,8 @@ export const CreditCardForm = () => {
     }
   }, [verificationError, verificationData]);
 
-  if (pendingVerification)
-    console.log('original pending verification', pendingVerification);
+  // if (pendingVerification)
+  //   console.log('original pending verification', pendingVerification);
 
   const submitUnavailable =
     pendingVerification ||
@@ -42,15 +42,18 @@ export const CreditCardForm = () => {
     verificationData?.cardIsValid === false ||
     checkoutPending;
 
+  const [cardNumber, setCardNumber] = useState('');
+
   return (
     <form onSubmit={onSubmit}>
       <div className="text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
         <SmartInput
-          label="Credit Card"
+          label="Card"
           name="creditCard"
           type="text"
           className="grow"
           placeholder="Daisy"
+          icon={<DynamicCardIcon cardNumber={cardNumber} size={26} />}
           required
           status={getStatus({
             pendingVerification,
@@ -58,7 +61,7 @@ export const CreditCardForm = () => {
             verificationData,
           })}
           onChangeValidator={function (value: string): void {
-            console.log(value);
+            setCardNumber(value);
           }}
           lazyValidator={async function (value: string) {
             verifyCreditCard({
