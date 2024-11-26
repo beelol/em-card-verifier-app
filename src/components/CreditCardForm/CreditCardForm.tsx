@@ -39,7 +39,6 @@ export const CreditCardForm = () => {
   }, [verificationError, verificationData]);
 
   const submitUnavailable =
-    pendingVerification ||
     verificationError !== undefined ||
     verificationData?.cardIsValid === false ||
     checkoutPending;
