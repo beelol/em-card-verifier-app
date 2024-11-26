@@ -1,6 +1,9 @@
 import useSWRMutation from 'swr/mutation';
 import { IVerifyCardRequest, IVerifyCardResponse } from './types';
 
+const BASE_API_URL =
+  process.env.NEXT_PUBLIC_BASE_API_URL || 'http://localhost:3000';
+
 const fetcher = async (
   url: string,
   options: Readonly<{ arg: IVerifyCardRequest }>,
@@ -22,7 +25,7 @@ export const useVerifyCreditCard = () => {
     Error,
     string,
     IVerifyCardRequest
-  >('http://localhost:3000/verify', fetcher);
+  >(`${BASE_API_URL}/verify`, fetcher);
 
   return mutation;
 };
