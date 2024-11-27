@@ -6,6 +6,7 @@ import { ISmartInputProps } from './types';
 describe('SmartInput', () => {
   const defaultProps: ISmartInputProps = {
     onChange: jest.fn(),
+
     lazyValidator: jest.fn().mockResolvedValue(undefined),
     label: 'Credit Card Number',
   };
@@ -29,8 +30,12 @@ describe('SmartInput', () => {
     const input = screen.getByLabelText(/credit card number/i);
 
     fireEvent.change(input, { target: { value: '4242' } });
-    expect(defaultProps.onChange).toHaveBeenCalledWith('4242');
+
     expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+
+    const mockCall = (defaultProps?.onChange as jest.Mock).mock.calls[0][0];
+
+    expect(mockCall.target.value).toBe('4242');
   });
 
   it('should not call lazyValidator before timeout', () => {
